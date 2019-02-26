@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Login.HastaKayitOlActivity">
+
+    <EditText
+        android:id="@+id/edt_hastaKayitOlTC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="TC"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/edt_hastaKayitOlIsim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:hint="İsim"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/edt_hastaKayitOlTC"
+        app:layout_constraintStart_toStartOf="@+id/edt_hastaKayitOlTC"
+        app:layout_constraintTop_toBottomOf="@+id/edt_hastaKayitOlTC" />
+
+    <EditText
+        android:id="@+id/edt_hastaKayitOlSoyisim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:hint="Soyisim"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/edt_hastaKayitOlIsim"
+        app:layout_constraintStart_toStartOf="@+id/edt_hastaKayitOlIsim"
+        app:layout_constraintTop_toBottomOf="@+id/edt_hastaKayitOlIsim" />
+
+    <EditText
+        android:id="@+id/edt_hastaKayitOlTel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:hint="Tel"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/edt_hastaKayitOlSoyisim"
+        app:layout_constraintStart_toStartOf="@+id/edt_hastaKayitOlSoyisim"
+        app:layout_constraintTop_toBottomOf="@+id/edt_hastaKayitOlSoyisim" />
+
+    <Button
+        android:id="@+id/btn_hastaKayitOl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="hastaKayitOlButonTik"
+        android:text="Kayıt Ol"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_hastaKayitOlSifre" />
+
+    <EditText
+        android:id="@+id/edt_hastaKayitOlSifre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:hint="Şifre"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/edt_hastaKayitOlTel"
+        app:layout_constraintStart_toStartOf="@+id/edt_hastaKayitOlTel"
+        app:layout_constraintTop_toBottomOf="@+id/edt_hastaKayitOlTel" />
+</android.support.constraint.ConstraintLayout>

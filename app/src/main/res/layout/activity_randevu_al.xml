@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HastaIslemleri.RandevuAlActivity">
+
+    <Spinner
+        android:id="@+id/spn_hastaneSecim"
+        android:layout_width="368dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spn_BolumSecim"
+        android:layout_width="368dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="55dp"
+        app:layout_constraintEnd_toEndOf="@+id/spn_hastaneSecim"
+        app:layout_constraintStart_toStartOf="@+id/spn_hastaneSecim"
+        app:layout_constraintTop_toBottomOf="@+id/spn_hastaneSecim" />
+
+    <Spinner
+        android:id="@+id/spn_DoktorSecim"
+        android:layout_width="368dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="55dp"
+        app:layout_constraintEnd_toEndOf="@+id/spn_BolumSecim"
+        app:layout_constraintStart_toStartOf="@+id/spn_BolumSecim"
+        app:layout_constraintTop_toBottomOf="@+id/spn_BolumSecim" />
+
+    <Button
+        android:id="@+id/btn_TarihSec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:onClick="tarihSecButonTik"
+        android:text="Tarih Seç"
+        app:layout_constraintEnd_toEndOf="@+id/spn_DoktorSecim"
+        app:layout_constraintTop_toBottomOf="@+id/spn_DoktorSecim" />
+
+    <EditText
+        android:id="@+id/edt_secilenTarih"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/spn_DoktorSecim"
+        app:layout_constraintTop_toBottomOf="@+id/spn_DoktorSecim" />
+
+    <Button
+        android:id="@+id/btn_RandevuAra"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:text="RandevuAra"
+        app:layout_constraintEnd_toEndOf="@+id/btn_TarihSec"
+        app:layout_constraintStart_toStartOf="@+id/edt_secilenTarih"
+        app:layout_constraintTop_toBottomOf="@+id/edt_secilenTarih" />
+</android.support.constraint.ConstraintLayout>
