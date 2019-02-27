@@ -64,8 +64,116 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
+        android:onClick="randevuAlButonTik"
         android:text="RandevuAra"
         app:layout_constraintEnd_toEndOf="@+id/btn_TarihSec"
         app:layout_constraintStart_toStartOf="@+id/edt_secilenTarih"
         app:layout_constraintTop_toBottomOf="@+id/edt_secilenTarih" />
+
+    <LinearLayout
+        android:id="@+id/randevuTarihGenelLayout"
+        android:layout_width="0dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_RandevuAra">
+
+        <Button
+            android:id="@+id/button_randevu08"
+            android:layout_width="49dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="4dp"
+            android:background="@color/colorPrimary"
+            android:text="08:00"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textSize="10sp"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="476dp" />
+
+        <Button
+            android:id="@+id/button_randevu10"
+            android:layout_width="49dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="4dp"
+            android:background="@color/colorPrimary"
+            android:text="10:00"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@+id/button_randevu08"
+            app:layout_constraintStart_toEndOf="@+id/button_randevu08"
+            app:layout_constraintTop_toTopOf="@+id/button_randevu08" />
+
+        <Button
+            android:id="@+id/button_randevu11"
+            android:layout_width="49dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="4dp"
+            android:background="@color/colorPrimary"
+            android:text="11:00"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@+id/button_randevu10"
+            app:layout_constraintStart_toEndOf="@+id/button_randevu10"
+            app:layout_constraintTop_toTopOf="@+id/button_randevu10" />
+
+        <Button
+            android:id="@+id/button_randevu12"
+            android:layout_width="49dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="4dp"
+            android:background="@color/colorPrimary"
+            android:text="12:00"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@+id/button_randevu11"
+            app:layout_constraintStart_toEndOf="@+id/button_randevu11"
+            app:layout_constraintTop_toTopOf="@+id/button_randevu11" />
+
+        <Button
+            android:id="@+id/button_randevu13"
+            android:layout_width="49dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="4dp"
+            android:background="@color/colorPrimary"
+            android:text="13:00"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@+id/button_randevu12"
+            app:layout_constraintStart_toEndOf="@+id/button_randevu12"
+            app:layout_constraintTop_toTopOf="@+id/button_randevu12" />
+
+        <Button
+            android:id="@+id/button_randevu15"
+            android:layout_width="49dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="4dp"
+            android:background="@color/colorPrimary"
+            android:text="15:00"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@+id/button_randevu13"
+            app:layout_constraintStart_toEndOf="@+id/button_randevu13"
+            app:layout_constraintTop_toTopOf="@+id/button_randevu13"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <Button
+            android:id="@+id/button_randevu17"
+            android:layout_width="49dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="4dp"
+            android:background="@color/colorPrimary"
+            android:text="17:00"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@+id/button_randevu15"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/button_randevu15"
+            app:layout_constraintTop_toTopOf="@+id/button_randevu15" />
+
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
