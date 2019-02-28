@@ -20,6 +20,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.yusufalicezik.drvirtual.Model.Doktor;
 import com.yusufalicezik.drvirtual.R;
 import com.yusufalicezik.drvirtual.Utils.DoktorCalismaTarihiParcala;
 
@@ -36,7 +37,7 @@ public class RandevuAlActivity extends AppCompatActivity {
 
 
     private Spinner hastaneSecSpinner, bolumSecSpinner, doktorSecSpinner;
-    private EditText secilenTarih;
+     EditText secilenTarih;
     private LinearLayout randevuTarihLayout;
     private Button r08,r10,r11,r12,r13,r15,r17;
 
@@ -46,7 +47,7 @@ public class RandevuAlActivity extends AppCompatActivity {
     private int anaId=0;
 
 
-    private int secilenGun=0;
+    int secilenGun;
 
 
 
@@ -57,7 +58,7 @@ public class RandevuAlActivity extends AppCompatActivity {
     private ArrayList<Integer> bolumID=new ArrayList<>();
 
     private ArrayList<String> doktorlar=new ArrayList<>();
-    private ArrayList<Integer> doktorID=new ArrayList<>();
+    private ArrayList<String> doktorID=new ArrayList<>();
 
 
 
@@ -77,7 +78,7 @@ public class RandevuAlActivity extends AppCompatActivity {
     public static HashMap<Integer, String> mapGunler=new HashMap<>();
     public static HashMap<Integer, String> mapSaatler=new HashMap<>();
 
-
+    Doktor secilenDoktor=new Doktor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,17 +189,6 @@ public class RandevuAlActivity extends AppCompatActivity {
                            }
 
 
-
-
-
-
-
-
-
-
-
-
-
                         } else {
 
                         }
@@ -232,11 +222,12 @@ public class RandevuAlActivity extends AppCompatActivity {
                         if (e == null) {
                             for(ParseObject object:scoreList){
 
-                                Log.d("hata Hastane id", String.valueOf(hastenelerID.get(position)));
-                                Log.d("hata brans id", String.valueOf(bolumID.get(position)));
+
+                                Log.d("ddid", String.valueOf(object.getString("doktor_tc")));
 
                                 doktorlar.add(object.getString("doktor_adi_soyadi"));
-                                doktorID.add(object.getInt("doktor_tc"));
+                                doktorID.add(object.getString("doktor_tc"));
+
 
                             }
 
@@ -258,6 +249,31 @@ public class RandevuAlActivity extends AppCompatActivity {
         });
 
 
+
+
+        doktorSecSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
+
+
+             //Doktor seçtiğimde..
+
+                secilenDoktor.setDoktorAdi(doktorlar.get(position));
+                secilenDoktor.setDoktorTc(String.valueOf(doktorID.get(position)));
+                Log.e("yusuf",secilenDoktor.getDoktorTc());
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+
             }
 
     private void hastaneVerileriniCek() {
@@ -270,7 +286,7 @@ public class RandevuAlActivity extends AppCompatActivity {
                 if(objects.size()>0){
 
                     for(ParseObject object:objects){
-                        hastaneler.add(object.getString("hastane_adi"));
+                        hastaneler.add(object.getString("hastane_adi")); //buralarda model sınıf oalcak.
                         hastenelerID.add(object.getInt("hastane_id"));
                         Log.e("ddd", String.valueOf(object.getInt("hastane_id")));
                     }
@@ -331,46 +347,27 @@ public class RandevuAlActivity extends AppCompatActivity {
     }
     public void randevuAlButonTik(View view){
 
-        String denemeVeri="1-3,1-5,1-1,2-1,1-4,2-2,2-4,2-5"; //dolu olanlar bunlar. Bunlar bir doktorun(seçilen) doktorun yani
-        //daha önce alınan randevuları.. günler ve saatlere göre..
 
-        DoktorCalismaTarihiParcala doktorCalismaTarihiParcala=new DoktorCalismaTarihiParcala();
+        if(kontrolEt()) {
 
-        ArrayList<ArrayList>gelenListe;
+            String doktorDetayVerileri="";
+           doktorDetayVerileriAl();
 
-        gelenListe=doktorCalismaTarihiParcala.parcala(denemeVeri);
 
-        ArrayList<String>doluGunler=gelenListe.get(0);
-        ArrayList<String>doluSaatler=gelenListe.get(1);
+            String denemeVeri = ""; //dolu olanlar bunlar. Bunlar bir doktorun(seçilen) doktorun yani
+            //daha önce alınan randevuları.. günler ve saatlere göre..
 
-        for(int i=0;i<doluGunler.size();i++){
 
-            Log.e("kontrol", "Dolu Gün : "+mapGunler.get(Integer.valueOf(doluGunler.get(i))) + " ve saati : "+
-                    mapSaatler.get(Integer.valueOf(doluSaatler.get(i))));
-
+        }else {
+            Toast.makeText(this, "dd", Toast.LENGTH_SHORT).show();
         }
+    }
 
-        Log.e("secilenGun",String.valueOf(secilenGun));
-
-
-        ArrayList<String>secilenGunDoluSaatler=new ArrayList<>();
-        for(int i=0;i<doluGunler.size();i++){
-            if(doluGunler.get(i).equals(String.valueOf(secilenGun))){
-                secilenGunDoluSaatler.add(doluSaatler.get(i));
-
-            }
-        }
-
-
-
-        ////
+    private void butonlariTazele() {
         randevuTarihLayout.setVisibility(View.VISIBLE);
 
-
-
-
         /////T
-        for(int i=0;i<randevuButonlari.length;i++){
+        for (int i = 0; i < randevuButonlari.length; i++) {
             randevuButonlari[i].setEnabled(true);
             randevuButonlari[i].setBackgroundColor(Color.GREEN);
 
@@ -378,53 +375,144 @@ public class RandevuAlActivity extends AppCompatActivity {
             randevuButonlari[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(RandevuAlActivity.this, randevuButonlari[finalI].getText().toString()+
+                    Toast.makeText(RandevuAlActivity.this, randevuButonlari[finalI].getText().toString() +
                             " saatini seçtiniz..", Toast.LENGTH_SHORT).show();
                 }
             });
         }
         /////T
+    }
 
-        for(int i=0;i<secilenGunDoluSaatler.size();i++){
-            Log.e("dols",secilenGunDoluSaatler.get(i));
-      // Log.e("doluu",mapSaatler.get(Integer.valueOf(secilenGunDoluSaatler.get(i))));
-           String saat=mapSaatler.get(Integer.valueOf(secilenGunDoluSaatler.get(i)));
-           switch (saat){
-               case "08:00":{
-                   randevuButonlari[0].setEnabled(false);
-                   randevuButonlari[0].setBackgroundColor(Color.RED);
-               }break;
-               case "10:00":{
-                   randevuButonlari[1].setEnabled(false);
-                   randevuButonlari[1].setBackgroundColor(Color.RED);
-               }break;
-               case "11:00":{
-                   randevuButonlari[2].setEnabled(false);
-                   randevuButonlari[2].setBackgroundColor(Color.RED);
-               }break;
-               case "12:00":{
-                   randevuButonlari[3].setEnabled(false);
-                   randevuButonlari[3].setBackgroundColor(Color.RED);
-               }break;
-               case "13:00":{
-                   randevuButonlari[4].setEnabled(false);
-                   randevuButonlari[4].setBackgroundColor(Color.RED);
-               }break;
-               case "15:00":{
-                   randevuButonlari[5].setEnabled(false);
-                   randevuButonlari[5].setBackgroundColor(Color.RED);
-               }break;
-               case "17:00":{
-                   randevuButonlari[6].setEnabled(false);
-                   randevuButonlari[6].setBackgroundColor(Color.RED);
-               }break;
-           }
+    private void doktorDetayVerileriAl() { //ayrıca burayı her sorgulamadan önce current tarihi(week olarak int) alıp küçük olanları silip
+        //örn: current week:4 ise 4 den küçük olan günleri(1-3,1-2, 3-4 gibi olduğundan ilk baştakileri) ilk baştakileri küçük
+        //olanları silip yeniden yükleriz doktor_alinan_randevulara çünkü artık o gün geçtiğinden o gün boşalır. şimdilik kalsın.
+        final ArrayList<String>donecekListe=new ArrayList<>();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("doktor_detay");
+        Log.e("yusufali",secilenDoktor.getDoktorTc());
+        query.whereEqualTo("doktor_tc", secilenDoktor.getDoktorTc());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> scoreList, ParseException e) {
+                if (e == null) {
+
+                       // Log.e("tttt",scoreList.get(0).getString("doktor_alinan_randevular"));
+                        if(scoreList.size()>0) {
+
+                            Log.e("yusufali",scoreList.get(0).getString("doktor_alinan_randevular"));
+
+                            donecekListe.add(scoreList.get(0).getString("doktor_alinan_randevular"));
+                            randevuSonuclariniGoster(donecekListe.get(0));
+                        }else {
+                            butonlariTazele();
+                            Toast.makeText(RandevuAlActivity.this, "rr", Toast.LENGTH_SHORT).show();
+                        }
+
+
+
+
+
+                } else {
+
+                }
+            }
+        });
+
+    }
+
+    private void randevuSonuclariniGoster(String s) {
+        if(s.isEmpty() || s.equalsIgnoreCase("")){
+            butonlariTazele();
+        }else{
+
+            DoktorCalismaTarihiParcala doktorCalismaTarihiParcala = new DoktorCalismaTarihiParcala();
+
+            ArrayList<ArrayList> gelenListe;
+
+            gelenListe = doktorCalismaTarihiParcala.parcala(s);
+
+
+            ArrayList<String> doluGunler = gelenListe.get(0);
+            ArrayList<String> doluSaatler = gelenListe.get(1);
+
+            for (int i = 0; i < doluGunler.size(); i++) {
+
+                Log.e("kontrol", "Dolu Gün : " + mapGunler.get(Integer.valueOf(doluGunler.get(i))) + " ve saati : " +
+                        mapSaatler.get(Integer.valueOf(doluSaatler.get(i))));
+
+            }
+
+            Log.e("secilenGun", String.valueOf(secilenGun));
+
+
+            ArrayList<String> secilenGunDoluSaatler = new ArrayList<>();
+            for (int i = 0; i < doluGunler.size(); i++) {
+                if (doluGunler.get(i).equals(String.valueOf(secilenGun))) {
+                    secilenGunDoluSaatler.add(doluSaatler.get(i));
+
+                }
+            }
+
+
+            ////
+
+
+
+            butonlariTazele();
+
+            for (int i = 0; i < secilenGunDoluSaatler.size(); i++) {
+                Log.e("dols", secilenGunDoluSaatler.get(i));
+                // Log.e("doluu",mapSaatler.get(Integer.valueOf(secilenGunDoluSaatler.get(i))));
+                String saat = mapSaatler.get(Integer.valueOf(secilenGunDoluSaatler.get(i)));
+                switch (saat) {
+                    case "08:00": {
+                        randevuButonlari[0].setEnabled(false);
+                        randevuButonlari[0].setBackgroundColor(Color.RED);
+                    }
+                    break;
+                    case "10:00": {
+                        randevuButonlari[1].setEnabled(false);
+                        randevuButonlari[1].setBackgroundColor(Color.RED);
+                    }
+                    break;
+                    case "11:00": {
+                        randevuButonlari[2].setEnabled(false);
+                        randevuButonlari[2].setBackgroundColor(Color.RED);
+                    }
+                    break;
+                    case "12:00": {
+                        randevuButonlari[3].setEnabled(false);
+                        randevuButonlari[3].setBackgroundColor(Color.RED);
+                    }
+                    break;
+                    case "13:00": {
+                        randevuButonlari[4].setEnabled(false);
+                        randevuButonlari[4].setBackgroundColor(Color.RED);
+                    }
+                    break;
+                    case "15:00": {
+                        randevuButonlari[5].setEnabled(false);
+                        randevuButonlari[5].setBackgroundColor(Color.RED);
+                    }
+                    break;
+                    case "17:00": {
+                        randevuButonlari[6].setEnabled(false);
+                        randevuButonlari[6].setBackgroundColor(Color.RED);
+                    }
+                    break;
+                }
+            }
+
+
+            //BU KISIMLAR FARKLI METHODTA YAPILABİLİR.
+
         }
+    }
 
-
-
-        //BU KISIMLAR FARKLI METHODTA YAPILABİLİR.
-
+    private boolean kontrolEt() {
+        if(adapterDoktorlar.isEmpty() || adapterHastane.isEmpty()||
+                adapterBolumler.isEmpty() || secilenTarih.getText().toString().equalsIgnoreCase("")){
+            return false;
+        }else
+            return true;
 
     }
 }
