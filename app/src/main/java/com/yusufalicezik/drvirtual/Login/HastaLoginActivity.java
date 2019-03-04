@@ -14,6 +14,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.yusufalicezik.drvirtual.AcilisActivity;
 import com.yusufalicezik.drvirtual.HastaIslemleri.HastaAnaMenuActivity;
+import com.yusufalicezik.drvirtual.HastaIslemleri.OnMuayeneMesajActivity;
 import com.yusufalicezik.drvirtual.R;
 
 public class HastaLoginActivity extends AppCompatActivity {
@@ -37,28 +38,52 @@ public class HastaLoginActivity extends AppCompatActivity {
 
 
     public void hastaGirisYapButonTik(View view){
-
-        if(!hastaSifre.getText().toString().isEmpty() && !hastaTc.getText().toString().isEmpty()){
-
-
-
-        String email=hastaTc.getText().toString()+"@gmail.com";
-        String sifre=hastaSifre.getText().toString();
-
-        mAuth.signInWithEmailAndPassword(email, sifre)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Intent intent=new Intent(HastaLoginActivity.this, HastaAnaMenuActivity.class);
-                            startActivity(intent);
-                        } else {
-                            Toast.makeText(HastaLoginActivity.this, "TC veya şifre yanlış", Toast.LENGTH_SHORT).show();
-                        }
+        if(AcilisActivity.girisYapan==1) {
+            if (!hastaSifre.getText().toString().isEmpty() && !hastaTc.getText().toString().isEmpty()) {
 
 
-                    }
-                });
+                String email = hastaTc.getText().toString() + "@gmail.com";
+                String sifre = hastaSifre.getText().toString();
+
+                mAuth.signInWithEmailAndPassword(email, sifre)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    Intent intent = new Intent(HastaLoginActivity.this, HastaAnaMenuActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    Toast.makeText(HastaLoginActivity.this, "TC veya şifre yanlış", Toast.LENGTH_SHORT).show();
+                                }
+
+
+                            }
+                        });
+            }
+        }else  if(AcilisActivity.girisYapan==2) {
+            if (!hastaSifre.getText().toString().isEmpty() && !hastaTc.getText().toString().isEmpty()) {
+
+
+                String email = hastaTc.getText().toString() + "@hotmail.com"; //giriş yapanın doktor/hasta olup olmadığını anlamak için gmail/hotmail
+                String sifre = hastaSifre.getText().toString();
+
+                mAuth.signInWithEmailAndPassword(email, sifre)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    Intent intent = new Intent(HastaLoginActivity.this, OnMuayeneMesajActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    Toast.makeText(HastaLoginActivity.this, "TC veya şifre yanlış", Toast.LENGTH_SHORT).show();
+                                }
+
+
+                            }
+                        });
+            }
         }
     }
 

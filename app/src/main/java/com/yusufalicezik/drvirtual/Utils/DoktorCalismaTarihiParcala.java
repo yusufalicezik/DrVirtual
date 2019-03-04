@@ -7,10 +7,9 @@ public class DoktorCalismaTarihiParcala {
 
 
 
-
-
     public ArrayList<String> gunlerListe=new ArrayList<>();
     public ArrayList<String> saatlerListe=new ArrayList<>();
+
 
 
     //gelenVeri="1-3,1-5,2-5"
@@ -25,11 +24,11 @@ public class DoktorCalismaTarihiParcala {
             //dizi[0]="1-3"   dizi[1]="1-5"
             for (int i = 0; i < dizi.length; i++) {
                 String[] yeniDizi = dizi[i].split("-");
-                gunlerListe.add(yeniDizi[0]);
-                saatlerListe.add(yeniDizi[1]);
+
                 //sonucta aynı indis numaralarına sahipler.
 
-
+                gunlerListe.add(yeniDizi[0]);
+                saatlerListe.add(yeniDizi[1]);
 
 
 
