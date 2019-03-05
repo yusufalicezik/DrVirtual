@@ -1,6 +1,7 @@
 package com.yusufalicezik.drvirtual.HastaIslemleri;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,13 +17,18 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ServerValue;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 import com.yusufalicezik.drvirtual.Model.Doktor;
 import com.yusufalicezik.drvirtual.R;
 import com.yusufalicezik.drvirtual.Utils.DoktorCalismaTarihiParcala;
+
+import org.angmarch.views.NiceSpinner;
 
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
@@ -49,6 +55,8 @@ public class RandevuAlActivity extends AppCompatActivity {
 
     int secilenGun;
 
+    private String secilenRandevuSaati;
+    private Button randevuKaydetButton;
 
 
     private ArrayList<String> hastaneler=new ArrayList<>();
@@ -62,6 +70,18 @@ public class RandevuAlActivity extends AppCompatActivity {
 
 
 
+    private HashMap<Integer,Boolean>randevuSaatButonSecildiMi=new HashMap<Integer, Boolean>(){{
+        put(0,false);
+        put(1,false);
+        put(2,false);
+        put(3,false);
+        put(4,false);
+        put(5,false);
+        put(6,false);
+        put(7,false); //birden fazla cyan seçimi olmaması için kontrol amaçlı.
+    }};
+
+
 
 
 
@@ -72,6 +92,12 @@ public class RandevuAlActivity extends AppCompatActivity {
 
 
     private ArrayAdapter<String> adapterHastane;
+
+    //NiceSpinner deneme
+    NiceSpinner niceSpinner;
+    ArrayAdapter<String> veriAdaptoru;
+
+    //
 
 
     ///Static
@@ -84,6 +110,15 @@ public class RandevuAlActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_randevu_al);
+
+        //nice spinner-start
+        niceSpinner = (NiceSpinner) findViewById(R.id.spn_hastaneSecimDeneme);
+
+
+        //nice spinner-end
+
+
+
         hastaneSecSpinner=findViewById(R.id.spn_hastaneSecim);
         doktorSecSpinner=findViewById(R.id.spn_DoktorSecim);
         bolumSecSpinner=findViewById(R.id.spn_BolumSecim);
@@ -101,6 +136,10 @@ public class RandevuAlActivity extends AppCompatActivity {
         r17=findViewById(R.id.button_randevu17);
 
         randevuButonlari= new Button[]{r08, r10,r11,r12,r13,r15,r17};
+
+
+        randevuKaydetButton=findViewById(R.id.randevuKaydetButton);
+        randevuKaydetButton.setEnabled(false);
 
 
 
@@ -124,8 +163,16 @@ public class RandevuAlActivity extends AppCompatActivity {
 
         adapterHastane= new ArrayAdapter<String>(getApplicationContext(),
                 android.R.layout.simple_spinner_item, hastaneler);
-        adapterHastane.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+       adapterHastane.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         hastaneSecSpinner.setAdapter(adapterHastane);
+
+
+       veriAdaptoru=new ArrayAdapter<String>
+                (this, android.R.layout.simple_list_item_1, android.R.id.text1, hastaneler);
+
+
+
+
 
 
 
@@ -144,6 +191,7 @@ public class RandevuAlActivity extends AppCompatActivity {
 
 
         hastaneVerileriniCek();
+
 
 
         hastaneSecSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -272,9 +320,7 @@ public class RandevuAlActivity extends AppCompatActivity {
         });
 
 
-
-
-            }
+        }
 
     private void hastaneVerileriniCek() {
         ParseQuery<ParseObject> query=ParseQuery.getQuery("Hastaneler");
@@ -292,6 +338,7 @@ public class RandevuAlActivity extends AppCompatActivity {
                     }
 
                     adapterHastane.notifyDataSetChanged();
+                    niceSpinner.setAdapter(adapterHastane);
 
                 }
             }
@@ -375,8 +422,27 @@ public class RandevuAlActivity extends AppCompatActivity {
             randevuButonlari[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(RandevuAlActivity.this, randevuButonlari[finalI].getText().toString() +
-                            " saatini seçtiniz..", Toast.LENGTH_SHORT).show();
+                    boolean secildiMi=randevuSaatButonSecildiMi.get(finalI);
+                    if(secildiMi){
+                        //eğer seçdildiMi true ise daha önceden seçilmiştir. bu yüzden normale döndürüp false yaparız. yani 2. basışıdır bu
+                        randevuButonlari[finalI].setBackgroundColor(Color.GREEN);
+                        randevuSaatButonSecildiMi.put(finalI,false);
+                        secilenRandevuSaati="";
+                        randevuSaatButonSecildiMi.put(7,false);
+                        randevuKaydetButton.setEnabled(false); //seçim yoksa kaydet butonu pasif
+                    }else{
+                        if(randevuSaatButonSecildiMi.get(7)==true){
+                            Toast.makeText(RandevuAlActivity.this, "Aynı anda birden fazla randevu saati seçemezsiniz.", Toast.LENGTH_SHORT).show();
+                        }else{
+                            randevuButonlari[finalI].setBackgroundColor(Color.CYAN);
+                            randevuSaatButonSecildiMi.put(finalI,true);
+                            secilenRandevuSaati=randevuButonlari[finalI].getText().toString();
+                            randevuSaatButonSecildiMi.put(7,true);
+                            randevuKaydetButton.setEnabled(true);//seçim varsa kaydet butou aktif
+                        }
+
+                    }
+
                 }
             });
         }
@@ -513,6 +579,55 @@ public class RandevuAlActivity extends AppCompatActivity {
             return false;
         }else
             return true;
+
+    }
+
+    public void randevuKaydetButtonTik(View view){
+        //şimdilik alinan randevular tablosuna kaydetmiyorum. sadece mesajların çıktığı randevu mesaja kaydediyoruz.
+        //parse kayıt işlemleri için
+
+        ///Hasta current id sine göre tc sini bulmak için;
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Hastalar");
+        String currentid=FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
+        query.whereEqualTo("uid", currentid);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> scoreList, ParseException e) {
+                if (e == null) {
+                    if(scoreList.size()>0) {
+                        String randevuAlanHastaTC=scoreList.get(0).getString("tc");
+                        //current user ım olan hastanın current uid sine göre tc sini aldım.
+                        final ParseObject object=new ParseObject("randevu_genel_mesajlar_liste");
+                        object.put("doktorTC",secilenDoktor.getDoktorTc());
+                        object.put("hastaTC",randevuAlanHastaTC);
+                        object.put("randevuSaat",secilenRandevuSaati);
+                        object.put("olusturulmaTarihi",String.valueOf(System.currentTimeMillis()));
+
+
+                        object.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if(e!=null){
+                                    Toast.makeText(RandevuAlActivity.this, "Başarısız(randevu kaydet hatası)", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(RandevuAlActivity.this, "Randevu başarıyla kaydeildi, yönlendiriliyorsunuz"
+                                            , Toast.LENGTH_SHORT).show();
+                                    Intent intent=new Intent(RandevuAlActivity.this,HastaAnaMenuActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            }
+                        });
+                    }
+
+                } else {
+
+                }
+            }
+        });
+        ///////
+
+
+
 
     }
 }

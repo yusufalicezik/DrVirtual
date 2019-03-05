@@ -11,6 +11,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.yusufalicezik.drvirtual.AcilisActivity;
 import com.yusufalicezik.drvirtual.Login.HastaLoginActivity;
 import com.yusufalicezik.drvirtual.R;
 
@@ -62,8 +63,8 @@ public class HastaAnaMenuActivity extends AppCompatActivity {
     }
     public void cikisYapButonTik(View view){
         mAuth.signOut();
-        Intent intent=new Intent(HastaAnaMenuActivity.this, HastaLoginActivity.class);
+        Intent intent=new Intent(HastaAnaMenuActivity.this, AcilisActivity.class);
         startActivity(intent);
-
+        finish();
     }
 }
