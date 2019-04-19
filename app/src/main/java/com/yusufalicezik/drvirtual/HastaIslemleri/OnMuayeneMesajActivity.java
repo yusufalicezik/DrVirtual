@@ -26,6 +26,8 @@ import com.yusufalicezik.drvirtual.Utils.GenelMesajlarListeAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.yusufalicezik.drvirtual.AcilisActivity.girisYapan;
+
 public class OnMuayeneMesajActivity extends AppCompatActivity {
 
 
@@ -51,8 +53,8 @@ public class OnMuayeneMesajActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         mRef = database.getReference();
 
-        Log.e("girisYapanDeneme", String.valueOf(AcilisActivity.girisYapan));
-        kimlerleMesajlastigimiGetir(AcilisActivity.girisYapan); //giriş yapan 1 ise şuan current user hasta, 2 ise doktor. giriş yapana göre arama yapacağım o yüzden gerkeli.
+        Log.e("girisYapanDeneme", String.valueOf(girisYapan));
+        kimlerleMesajlastigimiGetir(girisYapan); //giriş yapan 1 ise şuan current user hasta, 2 ise doktor. giriş yapana göre arama yapacağım o yüzden gerkeli.
 
     }
 
@@ -165,7 +167,7 @@ public class OnMuayeneMesajActivity extends AppCompatActivity {
 
 
     private void genelKullanicilariBul(){
-        if(AcilisActivity.girisYapan==1){ //hasta ise doktor listesi kullanılacak. bu hastanın mesajlaşmış olduğu doktorlar listesi
+        if(girisYapan==1){ //hasta ise doktor listesi kullanılacak. bu hastanın mesajlaşmış olduğu doktorlar listesi
             //burdan elimizdeki doktor tc sine göre doktorun tum bilgilerini çekeceğiz.
             //genel kullanıcı listesindeki tc lere göre arama yapıp listeyi set edeceğiz.
             for(int i=0;i<mesajlasilanGenelKullaniciler.size();i++){
@@ -200,7 +202,7 @@ public class OnMuayeneMesajActivity extends AppCompatActivity {
 
             }
 
-        }else if(AcilisActivity.girisYapan==2){
+        }else if(girisYapan==2){
             //yukardaki parsequery de doktorlar tablosu yerine hastalar tablosuna bak.
             for(int i=0;i<mesajlasilanGenelKullaniciler.size();i++){
 
@@ -250,6 +252,20 @@ public class OnMuayeneMesajActivity extends AppCompatActivity {
         Intent intent=new Intent(OnMuayeneMesajActivity.this, AcilisActivity.class);
         startActivity(intent);
         finish();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (girisYapan != 1) {
+            Intent a = new Intent(Intent.ACTION_MAIN);
+            a.addCategory(Intent.CATEGORY_HOME);
+            a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(a);
+        }else{
+            super.onBackPressed();
+        }
 
     }
 }
