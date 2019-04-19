@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class HastaKayitOlActivity extends AppCompatActivity {
 
-    EditText hastaTc, hastaIsim, hastaSoyisim, hastaTel, hastaSifre;
+   private EditText hastaTc, hastaIsim, hastaSoyisim, hastaTel, hastaSifre;
 
 
     private FirebaseAuth mAuth;

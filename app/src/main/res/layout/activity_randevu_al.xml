@@ -11,20 +11,10 @@
         android:layout_width="368dp"
         android:layout_height="40dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spn_hastaneSecimDeneme" />
-
-    <org.angmarch.views.NiceSpinner
-        android:id="@+id/spn_hastaneSecimDeneme"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,23 +40,24 @@
         android:id="@+id/btn_TarihSec"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:onClick="tarihSecButonTik"
         android:text="Tarih Seç"
-        app:layout_constraintEnd_toEndOf="@+id/spn_DoktorSecim"
-        app:layout_constraintTop_toBottomOf="@+id/spn_DoktorSecim" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/edt_secilenTarih" />
 
     <EditText
         android:id="@+id/edt_secilenTarih"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toStartOf="@+id/btn_TarihSec"
-        app:layout_constraintStart_toStartOf="@+id/spn_DoktorSecim"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spn_DoktorSecim" />
 
     <Button

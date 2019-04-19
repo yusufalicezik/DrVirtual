@@ -18,7 +18,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ServerValue;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -28,13 +27,10 @@ import com.yusufalicezik.drvirtual.Model.Doktor;
 import com.yusufalicezik.drvirtual.R;
 import com.yusufalicezik.drvirtual.Utils.DoktorCalismaTarihiParcala;
 
-import org.angmarch.views.NiceSpinner;
 
-import java.lang.reflect.Array;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -43,14 +39,14 @@ public class RandevuAlActivity extends AppCompatActivity {
 
 
     private Spinner hastaneSecSpinner, bolumSecSpinner, doktorSecSpinner;
-     EditText secilenTarih;
-    private LinearLayout randevuTarihLayout;
-    private Button r08,r10,r11,r12,r13,r15,r17;
+     private EditText secilenTarih;
+    private LinearLayout randevuTarihLayout;//
+    private Button r08,r10,r11,r12,r13,r15,r17;//
 
     private Button []randevuButonlari;
 
 
-    private int anaId=0;
+    private int anaId=0;//
 
 
     int secilenGun;
@@ -93,11 +89,7 @@ public class RandevuAlActivity extends AppCompatActivity {
 
     private ArrayAdapter<String> adapterHastane;
 
-    //NiceSpinner deneme
-    NiceSpinner niceSpinner;
-    ArrayAdapter<String> veriAdaptoru;
 
-    //
 
 
     ///Static
@@ -111,17 +103,14 @@ public class RandevuAlActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_randevu_al);
 
-        //nice spinner-start
-        niceSpinner = (NiceSpinner) findViewById(R.id.spn_hastaneSecimDeneme);
 
-
-        //nice spinner-end
 
 
 
         hastaneSecSpinner=findViewById(R.id.spn_hastaneSecim);
         doktorSecSpinner=findViewById(R.id.spn_DoktorSecim);
         bolumSecSpinner=findViewById(R.id.spn_BolumSecim);
+
         secilenTarih=findViewById(R.id.edt_secilenTarih);
         randevuTarihLayout=findViewById(R.id.randevuTarihGenelLayout);
 
@@ -163,16 +152,8 @@ public class RandevuAlActivity extends AppCompatActivity {
 
         adapterHastane= new ArrayAdapter<String>(getApplicationContext(),
                 android.R.layout.simple_spinner_item, hastaneler);
-       adapterHastane.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterHastane.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         hastaneSecSpinner.setAdapter(adapterHastane);
-
-
-       veriAdaptoru=new ArrayAdapter<String>
-                (this, android.R.layout.simple_list_item_1, android.R.id.text1, hastaneler);
-
-
-
-
 
 
 
@@ -193,7 +174,6 @@ public class RandevuAlActivity extends AppCompatActivity {
         hastaneVerileriniCek();
 
 
-
         hastaneSecSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -209,32 +189,32 @@ public class RandevuAlActivity extends AppCompatActivity {
                 query.findInBackground(new FindCallback<ParseObject>() {
                     public void done(List<ParseObject> scoreList, ParseException e) {
                         if (e == null) {
-                           final String bolum_idleri=scoreList.get(0).getString("bolum_idleri");
-                           String dizi[]=bolum_idleri.split(",");
+                            final String bolum_idleri=scoreList.get(0).getString("bolum_idleri");
+                            String dizi[]=bolum_idleri.split(",");
 
-                           bolumler.clear();
-                           bolumID.clear();
+                            bolumler.clear();
+                            bolumID.clear();
                             adapterBolumler.notifyDataSetChanged();
 
 
 
-                           for(int i=0;i<dizi.length;i++) {
-                               ParseQuery<ParseObject> query = ParseQuery.getQuery("Branslar");
-                               query.whereEqualTo("brans_id", Integer.valueOf(dizi[i]));
-                               query.orderByAscending("brans_id");
-                               query.findInBackground(new FindCallback<ParseObject>() {
-                                   public void done(List<ParseObject> scoreList, ParseException e) {
-                                       if (e == null) {
-                                          bolumler.add(scoreList.get(0).getString("brans_adi"));
-                                          bolumID.add(scoreList.get(0).getInt("brans_id"));
-                                          adapterBolumler.notifyDataSetChanged();
-                                          adapterDoktorlar.notifyDataSetChanged();
-                                       } else {
+                            for(int i=0;i<dizi.length;i++) {
+                                ParseQuery<ParseObject> query = ParseQuery.getQuery("Branslar");
+                                query.whereEqualTo("brans_id", Integer.valueOf(dizi[i]));
+                                query.orderByAscending("brans_id");
+                                query.findInBackground(new FindCallback<ParseObject>() {
+                                    public void done(List<ParseObject> scoreList, ParseException e) {
+                                        if (e == null) {
+                                            bolumler.add(scoreList.get(0).getString("brans_adi"));
+                                            bolumID.add(scoreList.get(0).getInt("brans_id"));
+                                            adapterBolumler.notifyDataSetChanged();
+                                            adapterDoktorlar.notifyDataSetChanged();
+                                        } else {
 
-                                       }
-                                   }
-                               });
-                           }
+                                        }
+                                    }
+                                });
+                            }
 
 
                         } else {
@@ -304,7 +284,7 @@ public class RandevuAlActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
 
 
-             //Doktor seçtiğimde..
+                //Doktor seçtiğimde..
 
                 secilenDoktor.setDoktorAdi(doktorlar.get(position));
                 secilenDoktor.setDoktorTc(String.valueOf(doktorID.get(position)));
@@ -320,7 +300,9 @@ public class RandevuAlActivity extends AppCompatActivity {
         });
 
 
-        }
+
+
+    }
 
     private void hastaneVerileriniCek() {
         ParseQuery<ParseObject> query=ParseQuery.getQuery("Hastaneler");
@@ -338,12 +320,15 @@ public class RandevuAlActivity extends AppCompatActivity {
                     }
 
                     adapterHastane.notifyDataSetChanged();
-                    niceSpinner.setAdapter(adapterHastane);
 
                 }
             }
         });
     }
+
+
+
+
 
     public void tarihSecButonTik(View view){
         // Şimdiki zaman bilgilerini alıyoruz. güncel yıl, güncel ay, güncel gün.

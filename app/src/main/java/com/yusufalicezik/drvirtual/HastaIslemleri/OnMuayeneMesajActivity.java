@@ -30,7 +30,7 @@ public class OnMuayeneMesajActivity extends AppCompatActivity {
 
 
 
-    ArrayList<GenelKullanici>mesajlasilanGenelKullaniciler=new ArrayList<>();
+    private ArrayList<GenelKullanici>mesajlasilanGenelKullaniciler=new ArrayList<>();
 
 
 
