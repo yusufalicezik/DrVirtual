@@ -1,5 +1,7 @@
 package com.yusufalicezik.drvirtual.HastaIslemleri;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +10,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,10 +27,14 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.yusufalicezik.drvirtual.Model.Doktor;
 import com.yusufalicezik.drvirtual.Model.GenelKullanici;
 import com.yusufalicezik.drvirtual.Model.Mesajlar;
 import com.yusufalicezik.drvirtual.R;
+import com.yusufalicezik.drvirtual.Utils.FragmentDialogPuanla;
 import com.yusufalicezik.drvirtual.Utils.MessagesAdapter;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -268,5 +276,20 @@ public class MessagesPersonActivity extends AppCompatActivity {
 
 
     }
+    public void puanlaIsimTik(View view) { //eğer mesajlasilan doktorsa diye kontrol yap, yani girisyapan==1 ise
+
+        if(girisYapan==1){
+
+            Doktor guncellenecekDoktor = new Doktor();
+            guncellenecekDoktor.setDoktorTc(mesajGonderilenTC);
+            guncellenecekDoktor.setDoktorAdi(mesajGonderilenIsimSoyisim);
+
+            FragmentDialogPuanla fragmentDoktorPuanla=new FragmentDialogPuanla(guncellenecekDoktor,getApplicationContext());
+            fragmentDoktorPuanla.show(getSupportFragmentManager(),"dialogGuncelle");
+        }
+
+
+    }
 
 }
+

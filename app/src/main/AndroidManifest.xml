@@ -24,7 +24,8 @@
         <activity android:name=".HastaIslemleri.HastaAnaMenuActivity" />
         <activity android:name=".HastaIslemleri.RandevuAlActivity" />
         <activity android:name=".HastaIslemleri.OnMuayeneMesajActivity" />
-        <activity android:name=".HastaIslemleri.MessagesPersonActivity"></activity>
+        <activity android:name=".HastaIslemleri.MessagesPersonActivity" />
+        <activity android:name=".HastaIslemleri.PuanlaActivity"></activity>
     </application>
 
 </manifest>

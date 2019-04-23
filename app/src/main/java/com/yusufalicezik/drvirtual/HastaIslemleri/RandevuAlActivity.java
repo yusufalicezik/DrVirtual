@@ -253,7 +253,7 @@ public class RandevuAlActivity extends AppCompatActivity {
 
                                 Log.d("ddid", String.valueOf(object.getString("doktor_tc")));
 
-                                doktorlar.add(object.getString("doktor_adi_soyadi"));
+                                doktorlar.add(object.getString("doktor_adi_soyadi") +" / "+object.getString("doktor_puan_s"));
                                 doktorID.add(object.getString("doktor_tc"));
 
 
